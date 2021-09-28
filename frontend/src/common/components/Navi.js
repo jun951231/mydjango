@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Navigation = () => (
+const Navi = () => (
     <NaviDiv>
      
      <NaviList>
             <NaviItem><Link to='/Counter'style={{textDecorationLine:'none',color:'black'}}><strong>Counter</strong></Link></NaviItem>
             <NaviItem><Link to='/Todo'style={{textDecorationLine:'none',color:'black'}}><strong>Todo</strong></Link></NaviItem>
+ 
             <NaviItem><Link to='/Math'style={{textDecorationLine:'none',color:'black'}}><strong>Math</strong></Link></NaviItem>
             <NaviItem><Link to='/Linear'style={{textDecorationLine:'none',color:'black'}}><strong>Linear</strong></Link></NaviItem>
             <NaviItem><Link to="/Nonlinear"style={{textDecorationLine:'none',color:'black'}}><strong>NonLinear</strong></Link></NaviItem>
@@ -19,7 +20,7 @@ const Navigation = () => (
         </NaviList>
     </NaviDiv>
 )
-export default Navigation
+export default Navi
 
 
 const NaviDiv = styled.div`
