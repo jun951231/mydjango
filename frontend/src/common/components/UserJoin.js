@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from "react-redux";
 import { addUserAction } from "reducers/user.reducer";
+import { userRegister } from 'api';
 
 function Copyright(props) {
   return (
@@ -31,32 +32,34 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function UserJoin() {
-  const [user, setUser] = useState({
-      username:'',
-      password:'',
-      email:'',
-      birth:'',
-      address:''
-  })
-  const {username, password, email, birth, address} = `user`
-  const dispatch = useDispatch()
-  const handleSubmit = e => {
-    e.preventDefault();      
-    addUser(user)
-    alert(`가입 회원 정보: ${JSON.stringify(user)}`)
-  }
-  const addUser = payload => (dispatch(addUserAction(payload)))
-
-  const handleChange = e => {
-    e.preventDefault()
-    const {name, value} = e.target
-    alert(`name: ${name}, value: ${value}`)
-    setUser({
-      ...user,
-      [name]: value      
+    const [user, setUser] = useState({
+        username: '',
+        password: '',
+        name: '',
+        email: '',
+        birth: '',
+        address: ''
     })
-  }
-  
+    const {username, password, name, email, birth, address} = `user`
+    
+    const handleSubmit = e => {
+        e.preventDefault();
+        alert(`가입 회원정보: ${JSON.stringify(user)}`)
+        userRegister({user})
+        .then(res => {alert(`회원가입완료: ${res.data.result}`)})
+        .catch(err => {alert(`회원가입 실패: ${err}`)})
+        
+    }
+    
+    const handleChange = e => {
+      e.preventDefault()
+      const {name, value} = e.target
+      setUser({
+        ...user,
+        [name]: value
+      })
+    }
+ 
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,10 +86,9 @@ export default function UserJoin() {
               fullWidth
               name="username"
               label="username"
-              type ="text"
+              type="text"
               id="username"
               value = {username}
-              autoComplete="current-password"
               onChange = {handleChange}
             />
             <TextField
@@ -98,7 +100,17 @@ export default function UserJoin() {
               type="password"
               id="password"
               value = {password}
-              autoComplete="current-password"
+              onChange = {handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="name"
+              label="name"
+              type="text"
+              id="name"
+              value = {name}
               onChange = {handleChange}
             />
             <TextField
@@ -110,7 +122,6 @@ export default function UserJoin() {
               label="Email Address"
               name="email"
               value = {email}
-              autoComplete="email"
               autoFocus
               onChange = {handleChange}
             />
@@ -123,7 +134,6 @@ export default function UserJoin() {
               type="text"
               id="birth"
               value = {birth}
-              autoComplete="current-password"
               onChange = {handleChange}
             />
             <TextField
@@ -135,7 +145,6 @@ export default function UserJoin() {
               type="text"
               id="address"
               value = {address}
-              autoComplete="current-password"
               onChange = {handleChange}
             />
             <FormControlLabel
